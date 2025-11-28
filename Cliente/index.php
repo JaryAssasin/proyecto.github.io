@@ -3,11 +3,11 @@
 // Coloca este archivo en htdocs (XAMPP). Asegúrate de tener la extensión php-pgsql habilitada.
 
 // ------- CONFIGURA ESTO -------
-$db_host = 'localhost';
-$db_port = '5432';
-$db_name = 'tu_basedatos';    // cambia por el nombre real
-$db_user = 'postgres';        // tu usuario
-$db_pass = 'tu_contraseña';   // tu contraseña
+$host = "localhost";
+$port = "5432";
+$dbname = "Videojuegos";  // <-- Nombre de tu base de datos en pgAdmin
+$user = "postgres";       // <-- Usuario de PostgreSQL
+$password = "12345678";   // <-- Contraseña del usuario
 // -------------------------------
 
 function connect_db() {
