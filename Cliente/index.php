@@ -57,9 +57,7 @@ body{margin:0;font-family:Inter,Segoe UI,Arial;background:linear-gradient(180deg
 </div>
 
 <script>
-// 🚀 API CORRECTA — SUBE UN NIVEL Y ENTRA A /php
-// Antes: const API = "obtener_videojuegos.php";
-// Ahora funcionando:
+
 const API = "../php/obtener_videojuegos.php";
 
 const grid = document.getElementById('grid');
