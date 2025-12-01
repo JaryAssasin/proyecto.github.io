@@ -57,8 +57,8 @@ body{margin:0;font-family:Inter,Segoe UI,Arial;background:linear-gradient(180deg
 </div>
 
 <script>
-// 🚀 API CORRECTA — subes un nivel y llamas al archivo real
-const API = "obtener_videojuegos.php";
+
+const API = "../php/obtener_videojuegos.php";
 
 const grid = document.getElementById('grid');
 const empty = document.getElementById('empty');
@@ -73,7 +73,7 @@ async function loadGames(q='') {
     const res = await fetch(url);
     const data = await res.json();
     if (data.error) throw new Error(data.error);
-    allGames = data.data ?? data; // por si tu API envía data[]
+    allGames = data.data ?? data;
     render();
   } catch (e) {
     grid.innerHTML = '<div class="empty">Error cargando juegos. Revisa la conexión y credenciales del servidor.</div>';
