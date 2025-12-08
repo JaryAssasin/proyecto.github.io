@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Catálogo Gamer</title>
+  <title>Catálogo de Videojuegos</title>
 
   <style>
     :root {
@@ -19,370 +19,381 @@
 
     body {
       margin: 0;
-      font-family: Inter, Arial;
-      background: linear-gradient(180deg, #071122, #0f1724);
+      font-family: Inter, Segoe UI, Arial;
+      background: linear-gradient(180deg, #071122 0%, #0f1724 100%);
       color: #e6eef6;
       padding: 24px;
-      display: flex;
-      gap: 20px;
     }
 
-    /* CONTENEDOR */
     .container {
       max-width: 1100px;
-      width: 70%;
+      margin: 0 auto;
     }
 
-    /* GRID */
+    .header {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .search {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      width: 260px;
+      background: #0b1a2a;
+      color: inherit;
+    }
+
+    .select {
+      padding: 8px;
+      border-radius: 10px;
+      background: #061323;
+      color: inherit;
+      border: none;
+    }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
     }
 
-    /* CARD */
     .card {
-      background: var(--card);
-      padding: 16px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.05));
+      padding: 12px;
       border-radius: 14px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
-      transition: 0.2s ease;
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
+      transition: transform .15s;
     }
 
     .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 14px rgba(109, 92, 255, 0.45);
+      transform: translateY(-6px);
     }
 
     .thumb {
-      height: 300px;
-      background: #061226;
+      height: 230px;
       border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 12px;
+      background: #061226;
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+      margin-bottom: 10px;
     }
 
     .thumb img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      background: #000;
     }
 
-    /* BOTONES GLOBALES */
-    button {
-      width: 100%;
-      margin-top: 12px;
-      padding: 10px;
-      border: none;
-      border-radius: 10px;
-      background: var(--neon1);
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 0 10px var(--neon1);
-    }
-
-    button:hover {
-      background: #5a4aff;
-      box-shadow: 0 0 14px var(--neon1);
-    }
-
-    /* BOTÓN DE USUARIO */
-    .user-btn {
-      position: fixed;
-      left: 20px;
-      top: 20px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--neon1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      cursor: pointer;
-      z-index: 2000;
-      box-shadow: 0 0 10px var(--neon1);
+    .h3 {
       font-size: 1rem;
+      margin: 0 0 6px 0;
     }
 
-    .user-menu {
-      position: fixed;
-      left: 20px;
-      top: 78px;
-      background: #0b1220;
-      border: 1px solid var(--neon2);
-      border-radius: 10px;
-      padding: 10px;
-      display: none;
-      z-index: 2001;
-      width: 140px;
-      box-shadow: 0 0 12px rgba(0, 234, 255, 0.25);
-    }
-
-    .user-menu div {
-      padding: 10px;
-      cursor: pointer;
-      border-radius: 6px;
-    }
-
-    .user-menu div:hover {
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    /* CARRITO */
-    #cartToggle {
-      position: fixed;
-      right: 20px;
-      top: 20px;
-      background: var(--neon1);
-      border: none;
-      padding: 10px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1.4rem;
-      width: 50px;
-      height: 50px;
+    .row {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 10px var(--neon1);
-      z-index: 999;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 6px;
     }
 
-    #cartMenu {
-      position: fixed;
-      right: -330px;
-      top: 0;
-      width: 300px;
-      height: 100%;
-      background: #0b1220;
-      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);
-      transition: 0.3s ease;
-      padding: 20px;
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
+    .price {
+      font-weight: 700;
+      color: var(--accent);
     }
 
-    #cartMenu.active {
-      right: 0;
-    }
-
-    #cartItems {
-      margin-top: 15px;
-      overflow-y: auto;
-      max-height: 55%;
-      padding-right: 10px;
-    }
-
-    #cartItems li {
-      margin-bottom: 12px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    .badge {
+      background: #08212b;
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-size: 0.85rem;
     }
 
     .empty {
-      margin-top: 40px;
       text-align: center;
-      font-size: 1.1rem;
       color: var(--muted);
+      padding: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .footer {
+      margin-top: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .cart-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #6ee7b7;
+      color: black;
+      font-weight: 700;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      z-index: 2000;
+      font-size: 16px;
+    }
+
+    .carrito-lateral {
+      position: fixed;
+      top: 0;
+      right: -350px;
+      width: 350px;
+      height: 100%;
+      background: #0b1220;
+      padding: 20px;
+      box-shadow: -4px 0 20px rgba(0, 0, 0, .4);
+      transition: right .3s ease;
+      z-index: 1999;
+      overflow-y: auto;
+    }
+
+    .carrito-lateral.abierto {
+      right: 0;
+    }
+
+    .btn-finalizar {
+      background: #6ee7b7;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      color: black;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 20px;
     }
   </style>
 </head>
 
 <body>
-  <!-- USUARIO -->
-  <div id="userBtn" class="user-btn"></div>
-  <div id="userMenu" class="user-menu">
-    <div id="logoutOption">Cerrar sesión</div>
+  <button id="btnCarrito" class="cart-toggle">
+    🛒 Carrito <span id="cartCountSide">0</span>
+  </button>
+
+  <div id="carritoLateral" class="carrito-lateral">
+    <h2>Tu Carrito</h2>
+    <ul id="carritoLista"></ul>
+    <p id="totalCarrito" style="font-weight:bold;margin-top:10px"></p>
+    <button class="btn-finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
   </div>
 
-  <!-- CATÁLOGO -->
   <div class="container">
-    <div id="catalogo"></div>
-  </div>
+    <div class="header">
+      <div>
+        <div class="title">🎮 Catálogo — Juegos</div>
+        <div style="color:var(--muted);font-size:0.9rem">Tu catálogo confiable de videojuegos</div>
+      </div>
 
-  <!-- CARRITO -->
-  <button id="cartToggle">🛒</button>
-
-  <div id="cartMenu">
-    <h2>Carrito</h2>
-    <ul id="cartItems"></ul>
-
-    <!-- TOTAL -->
-    <div id="cartTotal" style="margin-top:15px;font-size:1.1rem;font-weight:700;">
-      Total: $0.00
+      <div class="controls">
+        <input id="search" class="search" placeholder="Buscar título, plataforma..." />
+        <select id="filterPlatform" class="select">
+          <option value="">Todas las plataformas</option>
+          <option>PC</option>
+          <option>PlayStation 5</option>
+          <option>PlayStation 4</option>
+          <option>Xbox Series X</option>
+          <option>Nintendo Switch</option>
+        </select>
+      </div>
     </div>
 
-    <!-- FINALIZAR COMPRA -->
-    <button id="finalizarCompra" style="margin-top:15px;background:var(--neon2);box-shadow:0 0 10px var(--neon2);">
-      Finalizar compra
-    </button>
+    <div id="grid" class="grid"></div>
+    <div id="empty" class="empty" style="display:none">No se encontraron juegos.</div>
+
+    <div class="footer">
+      Coloca las imágenes en <code>images/{id_videojuego}.jpg</code>.
+    </div>
   </div>
+
   <script>
     const API = "../php/obtener_videojuegos.php";
+    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-    /* ===================== CARGAR JUEGOS ===================== */
-    async function loadGames() {
+    function saveCart() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+    }
+
+    function updateCartCount() {
+      const count = cart.reduce((a, b) => a + b.cantidad, 0);
+      document.getElementById("cartCountSide").innerText = count;
+    }
+
+    const grid = document.getElementById('grid');
+    const empty = document.getElementById('empty');
+    const searchInput = document.getElementById('search');
+    const filterPlatform = document.getElementById('filterPlatform');
+    let allGames = [];
+
+    async function loadGames(q = '') {
+      const url = API + (q ? '?q=' + encodeURIComponent(q) : '');
       try {
-        const res = await fetch(API);
-        const json = await res.json();
-        const juegos = json.data;
-
-        if (!juegos || juegos.length === 0) {
-          document.getElementById("catalogo").innerHTML =
-            `<div class="empty">No se encontraron juegos.</div>`;
-          return;
-        }
-
-        const html = `
-        <div class="grid">
-          ${juegos.map(g => `
-            <div class="card">
-              <div class="thumb">
-                <img src="../Cliente/images/${g.id_videojuego}.jpg"
-                     onerror="this.src='../images/default.jpg';"
-                     alt="${g.titulo}">
-              </div>
-              <h3>${g.titulo}</h3>
-              <p style="font-size:0.9rem;color:var(--muted)">
-                ${g.descripcion || ""}
-              </p>
-              <div style="margin-top:10px;font-weight:700">
-                $${Number(g.precio).toFixed(2)}
-              </div>
-              <button onclick="addToCart(${g.id_videojuego}, '${g.titulo}', ${g.precio})">
-                Añadir al carrito
-              </button>
-            </div>
-          `).join("")}
-        </div>
-      `;
-
-        document.getElementById("catalogo").innerHTML = html;
-
-      } catch (e) {
-        console.error(e);
-        document.getElementById("catalogo").innerHTML =
-          `<div class="empty">Error al cargar juegos.</div>`;
+        const res = await fetch(url);
+        const data = await res.json();
+        allGames = data.data ?? data;
+        render();
+      } catch {
+        grid.innerHTML = '<div class="empty">Error cargando juegos.</div>';
       }
     }
-    loadGames();
 
-
-    /* ===================== CARRITO ===================== */
-    const cartMenu = document.getElementById("cartMenu");
-    const cartItems = document.getElementById("cartItems");
-
-    let cart = [];
-
-    const cartTotalBox = document.createElement("div");
-    cartTotalBox.style.marginTop = "15px";
-    cartTotalBox.style.fontSize = "1.1rem";
-    cartTotalBox.style.fontWeight = "700";
-    cartTotalBox.innerText = "Total: $0.00";
-
-    cartMenu.appendChild(cartTotalBox);
-
-    const finalizarBtn = document.createElement("button");
-    finalizarBtn.id = "finalizarCompra";
-    finalizarBtn.innerText = "Finalizar compra";
-    finalizarBtn.style.marginTop = "15px";
-    finalizarBtn.style.background = "var(--neon2)";
-    finalizarBtn.style.boxShadow = "0 0 10px var(--neon2)";
-    cartMenu.appendChild(finalizarBtn);
-
-    document.getElementById("cartToggle").onclick = () => {
-      cartMenu.classList.toggle("active");
-    };
-
-    function actualizarTotal() {
-      const total = cart.reduce((sum, x) => sum + x.precio, 0);
-      cartTotalBox.innerText = `Total: $${total.toFixed(2)}`;
-    }
-
-    async function addToCart(id, titulo, precio) {
-      cart.push({ id, titulo, precio });
-
-      const li = document.createElement("li");
-      li.textContent = `${titulo} - $${precio.toFixed(2)}`;
-      cartItems.appendChild(li);
-
-      actualizarTotal();
-    }
-
-    /* ===================== FINALIZAR COMPRA ===================== */
-    finalizarBtn.onclick = async () => {
-      if (cart.length === 0) {
-        alert("Tu carrito está vacío.");
-        return;
-      }
-
-      let errores = 0;
-
-      for (let juego of cart) {
-        const formData = new FormData();
-        formData.append("total", juego.precio);
-        formData.append("estado", "pendiente");
-        formData.append("id_videojuego", juego.id);
-
-        try {
-          const res = await fetch("../php/insertar_pedido.php", {
-            method: "POST",
-            body: formData
-          });
-
-          const text = await res.text();
-          if (!text.includes("ok")) errores++;
-
-        } catch (e) {
-          errores++;
-        }
-      }
-
-      if (errores === 0) {
-        alert("Pedido realizado (un registro por juego).");
-        cart = [];
-        cartItems.innerHTML = "";
-        actualizarTotal();
+    function addToCart(game) {
+      const exists = cart.find(g => g.id === game.id);
+      if (exists) {
+        if (exists.cantidad < game.existencia) exists.cantidad++;
+        else { alert("No hay más stock disponible."); return; }
       } else {
-        alert("Hubo algunos errores al registrar los pedidos.");
+        cart.push({ id: game.id, titulo: game.titulo, precio: game.precio, cantidad: 1 });
       }
-    };
-
-
-    /* ===================== LOGIN / USUARIO ===================== */
-    const cliente = localStorage.getItem("cliente");
-    if (!cliente) window.location.href = "../index.html";
-
-    function getInitials(name) {
-      return name.split(" ").map(x => x[0].toUpperCase()).join("").slice(0, 2);
+      saveCart();
+      renderCarritoLateral();
     }
 
-    const userBtn = document.getElementById("userBtn");
-    const userMenu = document.getElementById("userMenu");
+    function render() {
+      const q = searchInput.value.trim().toLowerCase();
+      const platform = filterPlatform.value;
 
-    userBtn.textContent = getInitials(cliente);
-    userBtn.onclick = () =>
-      userMenu.style.display = userMenu.style.display === "block" ? "none" : "block";
+      const filtered = allGames.filter(g => {
+        if (platform && g.plataforma !== platform) return false;
+        if (!q) return true;
+        return g.titulo.toLowerCase().includes(q) ||
+               (g.descripcion || '').toLowerCase().includes(q) ||
+               g.plataforma.toLowerCase().includes(q);
+      });
 
-    document.getElementById("logoutOption").onclick = () => {
-      localStorage.removeItem("cliente");
-      window.location.href = "../index.html";
-    };
+      if (!filtered.length) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
 
-    document.body.onclick = e => {
-      if (!userBtn.contains(e.target) && !userMenu.contains(e.target))
-        userMenu.style.display = "none";
-    };
+      grid.innerHTML = filtered.map(g => `
+        <div class="card">
+          <div class="thumb">
+            <img src="images/${g.id_videojuego}.jpg" alt="${g.titulo}"
+            onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,${encodeURIComponent(defaultSVG())}'" />
+          </div>
+          <h3 class="h3">${g.titulo}</h3>
+          <div class="row">
+            <div class="badge">${g.plataforma}</div>
+            <div class="price">$ ${Number(g.precio).toFixed(2)}</div>
+          </div>
+          <div style="color:var(--muted);font-size:0.95rem;margin-bottom:8px">${g.descripcion || ''}</div>
+          <div style="font-size:0.9rem;color:var(--muted);margin-bottom:6px">Stock: <strong>${g.existencia}</strong></div>
+          <button onclick='addToCart({
+              id:${g.id_videojuego},
+              titulo:"${g.titulo.replace(/"/g,'&quot;')}",
+              precio:${g.precio},
+              existencia:${g.existencia}
+          })'
+          style="width:100%;padding:8px;border:0;background:#6ee7b7;color:black;border-radius:8px;font-weight:600;cursor:pointer;">
+          Añadir al carrito 🛒
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function defaultSVG() {
+      return `<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'>
+        <rect width='100%' height='100%' fill='%23061226'/>
+        <text x='50%' y='50%' fill='%239aa4b2' font-size='20'
+          text-anchor='middle' dominant-baseline='middle'>
+          Imagen no disponible
+        </text></svg>`;
+    }
+
+    let debounce;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(debounce);
+      debounce = setTimeout(() => loadGames(searchInput.value), 300);
+    });
+
+    filterPlatform.addEventListener('change', render);
+
+    loadGames();
+    updateCartCount();
+
+    document.getElementById("btnCarrito").addEventListener("click", () => {
+      document.getElementById("carritoLateral").classList.toggle("abierto");
+      renderCarritoLateral();
+    });
+
+    function renderCarritoLateral() {
+      const lista = document.getElementById("carritoLista");
+      const totalText = document.getElementById("totalCarrito");
+      lista.innerHTML = "";
+      let total = 0;
+
+      cart.forEach(item => {
+        total += item.precio * item.cantidad;
+        const li = document.createElement("li");
+        li.style.marginBottom = "12px";
+        li.innerHTML = `
+          <strong>${item.titulo}</strong><br>
+          Cantidad: ${item.cantidad}<br>
+          Precio: $${item.precio * item.cantidad}<br>
+          <button style="margin-top:6px;padding:6px;border:none;background:#ff5f5f;
+            border-radius:6px;color:white" onclick="removeItem(${item.id})">
+            Eliminar
+          </button>`;
+        lista.appendChild(li);
+      });
+
+      totalText.textContent = `Total: $${total}`;
+      updateCartCount();
+    }
+
+    function removeItem(id) {
+      cart = cart.filter(p => p.id !== id);
+      saveCart();
+      renderCarritoLateral();
+    }
+
+    async function finalizarPedido() {
+      if (!cart.length) { alert("Tu carrito está vacío."); return; }
+
+      const total = cart.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+
+      const res = await fetch("../php/insertar_pedidos.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ total: total, items: cart })
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert("Pedido realizado correctamente!");
+        cart = [];
+        saveCart();
+        window.location.href = "ticket.php?id=" + data.id_pedido;
+      } else {
+        alert("Error al procesar el pedido: " + data.error);
+      }
+    }
   </script>
-
 </body>
-
 </html>
