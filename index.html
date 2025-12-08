@@ -1,245 +1,251 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Iniciar Sesión</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css?v=2" rel="stylesheet">
+    <!-- Tus estilos -->
+    <link rel="stylesheet" href="Cliente/css/cliente.css">
+    <style>
+        /* === Fondo tipo mosaico con tu imagen === */
+        body {
+            margin: 0;
+            font-family: Inter, Segoe UI, Arial;
+
+            /* Fondo principal */
+            background:
+                linear-gradient(180deg, rgba(7, 17, 34, 0.88), rgba(15, 23, 36, 0.88)),
+                url("img/fondo1.jpg") repeat;
+
+            background-size: 380px;
+            background-attachment: fixed;
+
+            color: #e6eef6;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        /* === Estilo igual que catálogo === */
+        :root {
+            --bg: #0f1724;
+            --card: #0b1220;
+            --accent: #6ee7b7;
+            --muted: #9aa4b2;
+        }
+
+        /* Tarjeta del login */
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(20, 30, 45, 0.55);
+            backdrop-filter: blur(6px);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+            animation: fadeIn .6s ease;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Animación */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Títulos */
+        .login-title {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .login-sub {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        /* Inputs estilo catálogo */
+        .login-input {
+            width: 100%;
+            padding: 12px;
+            background: #0b1a2a;
+            color: #e6eef6;
+            border: 1px solid #162232;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            outline: none;
+            font-size: 15px;
+            transition: .25s;
+        }
+
+        .login-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 8px rgba(110, 231, 183, 0.35);
+        }
+
+        /* Botón */
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            color: #0b1220;
+            font-weight: 700;
+            font-size: 16px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .login-btn:hover {
+            filter: brightness(1.15);
+            transform: translateY(-2px);
+        }
+
+        /* Links */
+        .login-footer {
+            margin-top: 14px;
+            text-align: center;
+        }
+
+        .login-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mensajes */
+        .alert {
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .alert-info {
+            background: #0b1a2a;
+            color: var(--muted);
+            border: 1px solid #1a2a3b;
+        }
+
+        .alert-danger {
+            background: #311820;
+            color: #ff8080;
+            border: 1px solid #5c1f29;
+        }
+
+        .alert-success {
+            background: #0f2a1f;
+            color: #6ee7b7;
+            border: 1px solid #245c4a;
+        }
+    </style>
 
 </head>
 
-<body class="bg-gradient-primary">
+<body>
 
-    <div class="container">
+    <div class="login-container">
+        <h1 class="login-title">Bienvenido</h1>
+        <p class="login-sub">Inicia sesión para continuar</p>
 
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
+        <form id="loginForm">
+            <input type="text" id="username" name="username" class="login-input" placeholder="Usuario" required>
+            <input type="password" id="password" name="password" class="login-input" placeholder="Contraseña" required>
 
-            <div class="col-xl-10 col-lg-12 col-md-9">
+            <div id="loginMessage" class="alert alert-danger" style="display:none; margin-bottom:10px;"></div>
 
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <!-- Left column: centered icon -->
-                            <div class="col-lg-6 d-none d-lg-flex bg-login-image" style="align-items: center; justify-content: center; background-color: transparent;">
-                                <img src="https://png.pngtree.com/png-clipart/20241215/original/pngtree-retro-neon-video-game-controller-png-image_17879972.png" alt="Icono" style="width:160px; height:160px; object-fit:contain; opacity:0.95;">
-                            </div>
+            <button type="submit" class="login-btn">Iniciar sesión</button>
+        </form>
 
-                            <div class="col-lg-6">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">BIENVENIDO DE VUELTA!</h1>
-                                    </div>
-                                    <form class="user" id="loginForm">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
-                                                id="username" name="username" required
-                                                placeholder="Nombre de Usuario">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="password" name="password" required
-                                                placeholder="Contraseña">
-                                        </div>
-                                        <div id="loginMessage" class="alert alert-danger" style="display: none;">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            Iniciar Sesión
-                                        </button>
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <script>
-                            (function(){
-                                try{
-                                    // Only attempt redirects if client has an 'isLoggedIn' flag.
-                                    var isLogged = localStorage.getItem('isLoggedIn') === 'true';
-                                    if(!isLogged) return; // not authenticated in client storage -> show login page
-
-                                    // If client thinks it's logged, verify server-side session quickly to avoid stale localStorage causing redirects.
-                                    // This uses the existing PHP endpoint `php/check_session.php` which returns JSON { loggedIn: true/false, usuario: {...} }
-                                    var xhr = new XMLHttpRequest();
-                                    xhr.open('GET', 'php/check_session.php', true);
-                                    xhr.onreadystatechange = function() {
-                                        if(xhr.readyState !== 4) return;
-                                        try{
-                                            if(xhr.status === 200){
-                                                var resp = {};
-                                                try { resp = JSON.parse(xhr.responseText || '{}'); } catch(e){ resp = {}; }
-                                                if(resp.loggedIn){
-                                                    var role = (resp.usuario && resp.usuario.rol) ? resp.usuario.rol.toString().trim().toLowerCase() : (localStorage.getItem('userRoleNormalized') || '').toString().trim().toLowerCase();
-                                                    // Update localStorage with server truth to keep client and server consistent
-                                                    if(resp.usuario){
-                                                        localStorage.setItem('userRole', resp.usuario.rol || '');
-                                                        localStorage.setItem('userRoleNormalized', (resp.usuario.rol || '').toString().toLowerCase());
-                                                        localStorage.setItem('userDepartment', resp.usuario.departamento || '');
-                                                        localStorage.setItem('isLoggedIn', 'true');
-                                                    }
-                                                    // Now apply redirect rules based on server role
-                                                    if(role === 'administrador') return;
-                                                    if(role === 'cliente'){
-                                                        if(window.location.pathname.toLowerCase().indexOf('/cliente/') === -1){
-                                                            window.location.href = 'Cliente/index.php';
-                                                            return;
-                                                        }
-                                                    }
-                                                    if(role === 'usuario'){
-                                                        var userLink = document.querySelector('#accordionSidebar a.nav-link[href="usuarios.html"]');
-                                                        if(userLink){ var li = userLink.closest('li'); if(li) li.style.display = 'none'; else userLink.style.display = 'none'; }
-                                                        return;
-                                                    }
-                                                    // other roles: keep current page (login) or implement other redirects if needed
-                                                } else {
-                                                    // server says not logged in -> clear client flags to avoid stale redirects
-                                                    localStorage.removeItem('isLoggedIn');
-                                                    // do not redirect; user stays on login
-                                                }
-                                            } else {
-                                                // on error, prefer to NOT redirect (fail-safe)
-                                                localStorage.removeItem('isLoggedIn');
-                                            }
-                                        }catch(e){
-                                            // parsing error or other -> clear and do nothing
-                                            localStorage.removeItem('isLoggedIn');
-                                        }
-                                    };
-                                    xhr.send();
-                                }catch(e){
-                                    // if anything breaks, don't redirect
-                                    try{ localStorage.removeItem('isLoggedIn'); }catch(ignore){}
-                                }
-                            })();
-                        </script>
-            </div>
-
+        <div class="login-footer">
+            <a href="forgot-password.html">¿Olvidaste tu contraseña?</a>
         </div>
-
+        <div class="login-footer">
+            <a href="register.html">Crear una cuenta</a>
+        </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
+    <!-- Scripts -->
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
+    <!-- Tu lógica igualita -->
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const messageDiv = document.getElementById('loginMessage');
-            
+
             messageDiv.style.display = 'block';
             messageDiv.className = 'alert alert-info';
             messageDiv.textContent = 'Iniciando sesión...';
 
-            // Enviar datos al servidor usando AJAX
             $.ajax({
                 url: 'php/login.php',
                 type: 'POST',
-                data: {
-                    username: username,
-                    password: password
-                },
-                dataType: 'json', // Especificar que esperamos JSON
-                success: function(data) {
-                    console.log('Respuesta del servidor:', data);
-                    
+                data: { username, password },
+                dataType: 'json',
+                success: function (data) {
+
                     if (data.success) {
-                        // Login exitoso
                         messageDiv.className = 'alert alert-success';
                         messageDiv.textContent = 'Login exitoso. Redirigiendo...';
 
                         localStorage.setItem('isLoggedIn', 'true');
                         localStorage.setItem('userName', data.usuario.Nombre);
-                        // Guardar rol y versión normalizada
+
                         var rol = (data.usuario.rol || '').toString();
                         localStorage.setItem('userRole', rol);
                         localStorage.setItem('userRoleNormalized', rol.toLowerCase());
-                        localStorage.setItem('userDepartment', data.usuario.departamento);
 
                         setTimeout(() => {
-                            var roleNorm = (localStorage.getItem('userRoleNormalized') || '').toLowerCase();
-                            if (roleNorm === 'administrador') {
-                                window.location.href = 'usuarios.html';
-                            } else if (roleNorm === 'cliente') {
+                            if (rol.toLowerCase() === 'cliente') {
+                                localStorage.setItem('cliente', 'true');
                                 window.location.href = 'Cliente/index.php';
+                            } else if (rol.toLowerCase() === 'administrador') {
+                                window.location.href = 'usuarios.html';
                             } else {
-                                // Default area for other authenticated users
                                 window.location.href = 'clientes.html';
                             }
-                        }, 800);
+
+                        }, 600);
+
                     } else {
-                        // Login fallido
                         messageDiv.className = 'alert alert-danger';
                         messageDiv.textContent = data.message || 'Usuario o contraseña incorrectos';
                     }
                 },
-                error: function(xhr, status, error) {
-                    console.error('Error de AJAX:', status, error); // Para depuración
+                error: function () {
                     messageDiv.className = 'alert alert-danger';
-                    messageDiv.textContent = 'Error de conexión al servidor: ' + error;
+                    messageDiv.textContent = 'Error al conectar con el servidor.';
                 }
             });
         });
-    </script>
-    <script>
-        (function(){
-            try{
-                // Only run role-based redirects / UI hiding when the user is logged in.
-                var isLogged = localStorage.getItem('isLoggedIn') === 'true';
-                if(!isLogged) return; // not authenticated in client storage -> show login page
-
-                var role = localStorage.getItem('userRole') || '';
-                var roleNorm = (localStorage.getItem('userRoleNormalized') || role).toString().trim().toLowerCase();
-                if(roleNorm === 'administrador') return;
-                if(roleNorm === 'cliente'){
-                    if(window.location.pathname.toLowerCase().indexOf('/cliente/') === -1){
-                        window.location.href = 'Cliente/index.php';
-                        return;
-                    }
-                }
-                if(roleNorm === 'usuario'){
-                    var userLink = document.querySelector('#accordionSidebar a.nav-link[href="usuarios.html"]');
-                    if(userLink){
-                        var li = userLink.closest('li');
-                        if(li) li.style.display = 'none'; else userLink.style.display = 'none';
-                    }
-                    return;
-                
-                }
-                var userLink = document.querySelector('#accordionSidebar a.nav-link[href="usuarios.html"]');
-                if(userLink){ if(userLink.parentElement) userLink.parentElement.style.display = 'none'; else userLink.style.display = 'none'; }
-            }catch(e){ }
-        })();
     </script>
 
 </body>

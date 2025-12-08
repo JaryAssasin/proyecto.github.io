@@ -9,13 +9,12 @@
   <style>
     :root {
       --bg: #0f1724;
-      --card: #0b1220;
+      --card: #101a2d;
       --accent: #6ee7b7;
-      --muted: #9aa4b2
-    }
-
-    * {
-      box-sizing: border-box
+      --neon1: #6d5cff;
+      --neon2: #00eaff;
+      --muted: #9aa4b2;
+      --glass: rgba(255, 255, 255, 0.03);
     }
 
     body {
@@ -23,12 +22,12 @@
       font-family: Inter, Segoe UI, Arial;
       background: linear-gradient(180deg, #071122 0%, #0f1724 100%);
       color: #e6eef6;
-      padding: 24px
+      padding: 24px;
     }
 
     .container {
       max-width: 1100px;
-      margin: 0 auto
+      margin: 0 auto;
     }
 
     .header {
@@ -36,19 +35,19 @@
       gap: 12px;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 18px
+      margin-bottom: 18px;
     }
 
     .title {
       font-size: 1.6rem;
       font-weight: 700;
-      letter-spacing: 0.4px
+      letter-spacing: 0.4px;
     }
 
     .controls {
       display: flex;
       gap: 8px;
-      align-items: center
+      align-items: center;
     }
 
     .search {
@@ -58,7 +57,7 @@
       outline: none;
       width: 260px;
       background: #0b1a2a;
-      color: inherit
+      color: inherit;
     }
 
     .select {
@@ -66,13 +65,13 @@
       border-radius: 10px;
       background: #061323;
       color: inherit;
-      border: none
+      border: none;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 16px
+      gap: 16px;
     }
 
     .card {
@@ -80,11 +79,11 @@
       padding: 12px;
       border-radius: 14px;
       box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
-      transition: transform .15s
+      transition: transform .15s;
     }
 
     .card:hover {
-      transform: translateY(-6px)
+      transform: translateY(-6px);
     }
 
     .thumb {
@@ -95,19 +94,19 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      margin-bottom: 10px
+      margin-bottom: 10px;
     }
 
     .thumb img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* 🔥 IMPORTANTE */
+      object-fit: contain;
       background: #000;
     }
 
     .h3 {
       font-size: 1rem;
-      margin: 0 0 6px 0
+      margin: 0 0 6px 0;
     }
 
     .row {
@@ -116,19 +115,19 @@
       gap: 8px;
       font-size: 0.95rem;
       color: var(--muted);
-      margin-bottom: 6px
+      margin-bottom: 6px;
     }
 
     .price {
       font-weight: 700;
-      color: var(--accent)
+      color: var(--accent);
     }
 
     .badge {
       background: #08212b;
       padding: 6px 8px;
       border-radius: 8px;
-      font-size: 0.85rem
+      font-size: 0.85rem;
     }
 
     .empty {
@@ -136,17 +135,15 @@
       color: var(--muted);
       padding: 40px;
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.02)
+      background: rgba(255, 255, 255, 0.02);
     }
 
     .footer {
       margin-top: 18px;
       text-align: center;
       color: var(--muted);
-      font-size: 0.9rem
+      font-size: 0.9rem;
     }
-
-    /* --- CARRITO LATERAL --- */
 
     .cart-toggle {
       position: fixed;
@@ -195,7 +192,6 @@
 </head>
 
 <body>
-
   <button id="btnCarrito" class="cart-toggle">
     🛒 Carrito <span id="cartCountSide">0</span>
   </button>
@@ -237,7 +233,6 @@
 
   <script>
     const API = "../php/obtener_videojuegos.php";
-
     let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
     function saveCart() {
@@ -254,7 +249,6 @@
     const empty = document.getElementById('empty');
     const searchInput = document.getElementById('search');
     const filterPlatform = document.getElementById('filterPlatform');
-
     let allGames = [];
 
     async function loadGames(q = '') {
@@ -271,23 +265,12 @@
 
     function addToCart(game) {
       const exists = cart.find(g => g.id === game.id);
-
       if (exists) {
-        if (exists.cantidad < game.existencia) {
-          exists.cantidad++;
-        } else {
-          alert("No hay más stock disponible.");
-          return;
-        }
+        if (exists.cantidad < game.existencia) exists.cantidad++;
+        else { alert("No hay más stock disponible."); return; }
       } else {
-        cart.push({
-          id: game.id,
-          titulo: game.titulo,
-          precio: game.precio,
-          cantidad: 1
-        });
+        cart.push({ id: game.id, titulo: game.titulo, precio: game.precio, cantidad: 1 });
       }
-
       saveCart();
       renderCarritoLateral();
     }
@@ -299,57 +282,38 @@
       const filtered = allGames.filter(g => {
         if (platform && g.plataforma !== platform) return false;
         if (!q) return true;
-        return (
-          g.titulo.toLowerCase().includes(q) ||
-          (g.descripcion || '').toLowerCase().includes(q) ||
-          g.plataforma.toLowerCase().includes(q)
-        );
+        return g.titulo.toLowerCase().includes(q) ||
+               (g.descripcion || '').toLowerCase().includes(q) ||
+               g.plataforma.toLowerCase().includes(q);
       });
 
-      if (filtered.length === 0) {
-        grid.innerHTML = '';
-        empty.style.display = 'block';
-        return;
-      }
-
+      if (!filtered.length) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
       empty.style.display = 'none';
 
-      grid.innerHTML = filtered.map(g => {
-        const imgPath = `images/${g.id_videojuego}.jpg`;
-        return `
-      <div class="card">
-        <div class="thumb">
-          <img src="${imgPath}" alt="${g.titulo}"
+      grid.innerHTML = filtered.map(g => `
+        <div class="card">
+          <div class="thumb">
+            <img src="images/${g.id_videojuego}.jpg" alt="${g.titulo}"
             onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,${encodeURIComponent(defaultSVG())}'" />
+          </div>
+          <h3 class="h3">${g.titulo}</h3>
+          <div class="row">
+            <div class="badge">${g.plataforma}</div>
+            <div class="price">$ ${Number(g.precio).toFixed(2)}</div>
+          </div>
+          <div style="color:var(--muted);font-size:0.95rem;margin-bottom:8px">${g.descripcion || ''}</div>
+          <div style="font-size:0.9rem;color:var(--muted);margin-bottom:6px">Stock: <strong>${g.existencia}</strong></div>
+          <button onclick='addToCart({
+              id:${g.id_videojuego},
+              titulo:"${g.titulo.replace(/"/g,'&quot;')}",
+              precio:${g.precio},
+              existencia:${g.existencia}
+          })'
+          style="width:100%;padding:8px;border:0;background:#6ee7b7;color:black;border-radius:8px;font-weight:600;cursor:pointer;">
+          Añadir al carrito 🛒
+          </button>
         </div>
-
-        <h3 class="h3">${g.titulo}</h3>
-
-        <div class="row">
-          <div class="badge">${g.plataforma}</div>
-          <div class="price">$ ${Number(g.precio).toFixed(2)}</div>
-        </div>
-
-        <div style="color:var(--muted);font-size:0.95rem;margin-bottom:8px">
-          ${g.descripcion || ''}
-        </div>
-
-        <div style="font-size:0.9rem;color:var(--muted);margin-bottom:6px">
-          Stock: <strong>${g.existencia}</strong>
-        </div>
-
-        <button onclick='addToCart({
-            id:${g.id_videojuego},
-            titulo:"${g.titulo.replace(/"/g, '&quot;')}",
-            precio:${g.precio},
-            existencia:${g.existencia}
-        })'
-           style="width:100%;padding:8px;border:0;background:#6ee7b7;color:black;
-                  border-radius:8px;font-weight:600;cursor:pointer;">
-            Añadir al carrito 🛒
-        </button>
-      </div>`;
-      }).join('');
+      `).join('');
     }
 
     function defaultSVG() {
@@ -380,30 +344,26 @@
     function renderCarritoLateral() {
       const lista = document.getElementById("carritoLista");
       const totalText = document.getElementById("totalCarrito");
-
       lista.innerHTML = "";
       let total = 0;
 
       cart.forEach(item => {
         total += item.precio * item.cantidad;
-
         const li = document.createElement("li");
         li.style.marginBottom = "12px";
         li.innerHTML = `
-            <strong>${item.titulo}</strong><br>
-            Cantidad: ${item.cantidad}<br>
-            Precio: $${item.precio * item.cantidad}<br>
-            <button style="margin-top:6px;padding:6px;border:none;background:#ff5f5f;
+          <strong>${item.titulo}</strong><br>
+          Cantidad: ${item.cantidad}<br>
+          Precio: $${item.precio * item.cantidad}<br>
+          <button style="margin-top:6px;padding:6px;border:none;background:#ff5f5f;
             border-radius:6px;color:white" onclick="removeItem(${item.id})">
-                Eliminar
-            </button>
-        `;
+            Eliminar
+          </button>`;
         lista.appendChild(li);
       });
 
       totalText.textContent = `Total: $${total}`;
-      document.getElementById("cartCountSide").innerText =
-        cart.reduce((a, b) => a + b.cantidad, 0);
+      updateCartCount();
     }
 
     function removeItem(id) {
@@ -413,20 +373,14 @@
     }
 
     async function finalizarPedido() {
-      if (cart.length === 0) {
-        alert("Tu carrito está vacío.");
-        return;
-      }
+      if (!cart.length) { alert("Tu carrito está vacío."); return; }
 
       const total = cart.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
 
       const res = await fetch("../php/insertar_pedidos.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          total: total,
-          items: cart
-        })
+        body: JSON.stringify({ total: total, items: cart })
       });
 
       const data = await res.json();
@@ -440,8 +394,6 @@
         alert("Error al procesar el pedido: " + data.error);
       }
     }
-
   </script>
-
 </body>
 </html>
