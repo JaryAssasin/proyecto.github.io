@@ -27,12 +27,136 @@
         })();
     </script>
     <style>
-        .role-usuario #accordionSidebar a.nav-link[href="usuarios.html"] {
-            display: none !important;
+        :root {
+            --bg: #0f1724;
+            --card: #0b1220;
+            --accent: #6ee7b7;
+            --neon1: #6d5cff;
+            --neon2: #00eaff;
+            --text: #e6eef6;
+            --muted: #9aa4b2;
         }
 
-        .role-usuario #accordionSidebar li:has(> a.nav-link[href="usuarios.html"]) {
-            display: none !important;
+        body {
+            background: linear-gradient(180deg, #071122 0%, #0f1724 100%) !important;
+            color: var(--text) !important;
+            font-family: "Inter", sans-serif !important;
+        }
+
+        /* Sidebar Gamer */
+        .sidebar {
+            background: #0b1220 !important;
+            box-shadow: 0 0 18px rgba(0, 234, 255, 0.15);
+            border-right: 1px solid var(--neon2);
+        }
+
+        .sidebar .nav-item .nav-link {
+            color: var(--text) !important;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .sidebar .nav-item .nav-link i {
+            color: var(--neon2) !important;
+        }
+
+        .sidebar .nav-item:hover .nav-link,
+        .sidebar .nav-item.active .nav-link {
+            background: rgba(255, 255, 255, 0.06);
+            border-left: 3px solid var(--neon1);
+            color: var(--accent) !important;
+        }
+
+        .sidebar-brand {
+            background: #0f1724 !important;
+            border-bottom: 1px solid var(--neon2);
+            box-shadow: 0 0 12px rgba(0, 234, 255, 0.25);
+        }
+
+        .sidebar-brand-text {
+            color: var(--accent) !important;
+            font-weight: 800;
+            text-shadow: 0 0 8px var(--neon1);
+        }
+
+        /* Tabla */
+        .card {
+            background: var(--card) !important;
+            border: 1px solid var(--neon2);
+            box-shadow: 0 0 15px rgba(0, 234, 255, 0.15);
+        }
+
+        .card-header {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border-bottom: 1px solid var(--neon2);
+        }
+
+        .card-header h6 {
+            color: var(--accent) !important;
+            text-shadow: 0 0 4px var(--neon1);
+        }
+
+        table.dataTable {
+            color: var(--text) !important;
+        }
+
+        table thead {
+            background: rgba(0, 234, 255, 0.06) !important;
+        }
+
+        table.dataTable tbody tr:hover {
+            background: rgba(255, 255, 255, 0.06) !important;
+        }
+
+        /* Botones */
+        .btn-primary {
+            background: var(--neon1) !important;
+            border: none !important;
+            box-shadow: 0 0 8px var(--neon1);
+        }
+
+        .btn-danger {
+            background: #ff3b3b !important;
+            border: none !important;
+            box-shadow: 0 0 8px #ff3b3b;
+        }
+
+        .btn-warning {
+            background: #ffbe3b !important;
+            border: none !important;
+            box-shadow: 0 0 8px #ffbe3b;
+        }
+
+        /* Footer */
+        footer {
+            background: #0b1220 !important;
+            border-top: 1px solid var(--neon2);
+            color: var(--muted) !important;
+        }
+
+        /* Modal estilo neon */
+        .modal-content {
+            background: #0b1220 !important;
+            border: 1px solid var(--neon2);
+            box-shadow: 0 0 20px rgba(0, 234, 255, 0.2);
+            color: var(--text);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--neon2);
+        }
+
+        input,
+        select {
+            background: #0f1724 !important;
+            color: var(--text) !important;
+            border: 1px solid #1f2a40 !important;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--neon1) !important;
+            box-shadow: 0 0 6px var(--neon1);
         }
     </style>
 
@@ -68,6 +192,13 @@
                     <i class="fas fa-gamepad"></i>
                     <span>Pedidos</span></a>
             </li>
+            <!-- NUEVO: CORTE -->
+            <li class="nav-item">
+                <a class="nav-link" href="recorte_caja.html">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Corte</span>
+                </a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="usuarios.html">
@@ -86,6 +217,10 @@
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
+                <button id="logoutBtn" class="btn btn-danger btn-sm">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                </button>
+
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <h5 class="ml-3">Gestión de Compañías</h5>
                 </nav>
@@ -212,6 +347,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.clear();       // Borra datos de sesión
+            sessionStorage.clear();     // Opcional: por si usas esto
+            window.location.href = 'index.html';  // Te manda al login
+        });
+
         $(document).ready(function () {
             var tabla = $('#tablaCompanias').DataTable({
                 ajax: "php/obtener_companias.php",
@@ -225,12 +366,12 @@
                         data: null,
                         render: function (data, type, row) {
                             return `
-                <button class="btn btn-warning btn-sm btn-editar" data-id="${row.id_compañia}">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button class="btn btn-danger btn-sm btn-eliminar" data-id="${row.id_compañia}">
-                    <i class="fas fa-trash"></i>
-                </button>`;
+    <button class="btn btn-warning btn-sm btn-editar" data-id="${row.id_compañia}">
+        <i class="fas fa-edit"></i>
+    </button>
+    <button class="btn btn-danger btn-sm btn-eliminar" data-id="${row.id_compañia}">
+        <i class="fas fa-trash"></i>
+    </button>`;
                         }
                     }
                 ]

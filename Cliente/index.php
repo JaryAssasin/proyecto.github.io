@@ -166,7 +166,7 @@
       left: 20px;
       background: transparent;
       color: #e6eef6;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       padding: 6px 10px;
       border-radius: 8px;
       cursor: pointer;
@@ -298,8 +298,8 @@
         if (platform && g.plataforma !== platform) return false;
         if (!q) return true;
         return g.titulo.toLowerCase().includes(q) ||
-               (g.descripcion || '').toLowerCase().includes(q) ||
-               g.plataforma.toLowerCase().includes(q);
+          (g.descripcion || '').toLowerCase().includes(q) ||
+          g.plataforma.toLowerCase().includes(q);
       });
 
       if (!filtered.length) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
@@ -320,7 +320,7 @@
           <div style="font-size:0.9rem;color:var(--muted);margin-bottom:6px">Stock: <strong>${g.existencia}</strong></div>
           <button onclick='addToCart({
               id:${g.id_videojuego},
-              titulo:"${g.titulo.replace(/"/g,'&quot;')}",
+              titulo:"${g.titulo.replace(/"/g, '&quot;')}",
               precio:${g.precio},
               existencia:${g.existencia}
           })'
@@ -417,4 +417,5 @@
     }
   </script>
 </body>
+
 </html>

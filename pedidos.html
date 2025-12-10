@@ -16,16 +16,160 @@
 
 <body id="page-top">
     <script>
-        (function(){
+        (function () {
             var role = localStorage.getItem('userRole') || '';
             var roleNormalized = localStorage.getItem('userRoleNormalized') || role.toString().trim().toLowerCase();
-            if (roleNormalized) { try { document.documentElement.classList.add('role-' + roleNormalized); } catch(e){} }
+            if (roleNormalized) { try { document.documentElement.classList.add('role-' + roleNormalized); } catch (e) { } }
             if (!localStorage.getItem('isLoggedIn')) { window.location.href = 'index.html'; }
         })();
     </script>
     <style>
-        .role-usuario #accordionSidebar a.nav-link[href="usuarios.html"] { display: none !important; }
-        .role-usuario #accordionSidebar li:has(> a.nav-link[href="usuarios.html"]) { display: none !important; }
+        :root {
+            --bg: #0f1724;
+            --card: #0b1220;
+            --accent: #6ee7b7;
+            --neon1: #6d5cff;
+            --neon2: #00eaff;
+            --text: #e6eef6;
+            --muted: #9aa4b2;
+        }
+
+        body {
+            background: linear-gradient(180deg, #071122 0%, #0f1724 100%) !important;
+            color: var(--text) !important;
+            font-family: "Inter", sans-serif !important;
+        }
+
+        /* Sidebar Gamer */
+        .sidebar {
+            background: #0b1220 !important;
+            box-shadow: 0 0 18px rgba(0, 234, 255, 0.15);
+            border-right: 1px solid var(--neon2);
+        }
+
+        .sidebar .nav-item .nav-link {
+            color: var(--text) !important;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .sidebar .nav-item .nav-link i {
+            color: var(--neon2) !important;
+        }
+
+        .sidebar .nav-item:hover .nav-link,
+        .sidebar .nav-item.active .nav-link {
+            background: rgba(255, 255, 255, 0.06);
+            border-left: 3px solid var(--neon1);
+            color: var(--accent) !important;
+        }
+
+        .sidebar-brand {
+            background: #0f1724 !important;
+            border-bottom: 1px solid var(--neon2);
+            box-shadow: 0 0 12px rgba(0, 234, 255, 0.25);
+        }
+
+        .sidebar-brand-text {
+            color: var(--accent) !important;
+            font-weight: 800;
+            text-shadow: 0 0 8px var(--neon1);
+        }
+
+        /* Tabla */
+        .card {
+            background: var(--card) !important;
+            border: 1px solid var(--neon2);
+            box-shadow: 0 0 15px rgba(0, 234, 255, 0.15);
+        }
+
+        .card-header {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border-bottom: 1px solid var(--neon2);
+        }
+
+        .card-header h6 {
+            color: var(--accent) !important;
+            text-shadow: 0 0 4px var(--neon1);
+        }
+
+        table.dataTable {
+            color: var(--text) !important;
+        }
+
+        table thead {
+            background: rgba(0, 234, 255, 0.06) !important;
+        }
+
+        table.dataTable tbody tr:hover {
+            background: rgba(255, 255, 255, 0.06) !important;
+        }
+
+        /* Botones */
+        .btn-primary {
+            background: var(--neon1) !important;
+            border: none !important;
+            box-shadow: 0 0 8px var(--neon1);
+        }
+
+        .btn-danger {
+            background: #ff3b3b !important;
+            border: none !important;
+            box-shadow: 0 0 8px #ff3b3b;
+        }
+
+        .btn-warning {
+            background: #ffbe3b !important;
+            border: none !important;
+            box-shadow: 0 0 8px #ffbe3b;
+        }
+
+        /* Footer */
+        footer {
+            background: #0b1220 !important;
+            border-top: 1px solid var(--neon2);
+            color: var(--muted) !important;
+        }
+
+        /* Modal estilo neon */
+        .modal-content {
+            background: #0b1220 !important;
+            border: 1px solid var(--neon2);
+            box-shadow: 0 0 20px rgba(0, 234, 255, 0.2);
+            color: var(--text);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--neon2);
+        }
+
+        input,
+        select {
+            background: #0f1724 !important;
+            color: var(--text) !important;
+            border: 1px solid #1f2a40 !important;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--neon1) !important;
+            box-shadow: 0 0 6px var(--neon1);
+        }
+
+        .topbar {
+            background: #0b1220 !important;
+            border-bottom: 1px solid var(--neon2);
+            box-shadow: 0 0 12px rgba(0, 234, 255, 0.25) !important;
+        }
+
+
+        .container-fluid {
+            background: #0f1724 !important;
+        }
+
+        .bg-white {
+            background: transparent !important;
+        }
     </style>
     <div id="wrapper">
 
@@ -52,6 +196,7 @@
                     <span>Videojuegos</span>
                 </a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="compañias.html">
                     <i class="fas fa-building"></i>
@@ -67,7 +212,13 @@
                     <span>Pedidos</span>
                 </a>
             </li>
-
+            <!-- NUEVO: CORTE -->
+            <li class="nav-item">
+                <a class="nav-link" href="recorte_caja.html">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Corte</span>
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="usuarios.html">
                     <i class="fas fa-user"></i>
@@ -83,8 +234,17 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-dark topbar mb-4 static-top shadow">
                     <h5 class="m-0 font-weight-bold text-primary">Gestión de Pedidos</h5>
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <button id="logoutBtn" class="btn btn-danger btn-sm">
+                                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                            </button>
+                        </li>
+                    </ul>
                 </nav>
 
                 <!-- Main Content -->
@@ -122,7 +282,7 @@
             </div>
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer" style="background:#0b1220;">
                 <div class="container my-auto">
                     <div class="text-center my-auto">
                         <span>© Videojuegos 2025</span>
@@ -197,18 +357,24 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        (function(){
-            try{
+        (function () {
+            try {
                 var role = localStorage.getItem('userRole') || '';
                 var roleNorm = (localStorage.getItem('userRoleNormalized') || role).toString().trim().toLowerCase();
-                if(roleNorm === 'administrador') return;
-                if(roleNorm === 'cliente'){ if(window.location.pathname.toLowerCase().indexOf('/cliente/') === -1){ window.location.href = 'Cliente/index.php'; return; } }
-                if(roleNorm === 'usuario'){ var userLink = document.querySelector('#accordionSidebar a.nav-link[href="usuarios.html"]'); if(userLink){ if(userLink.parentElement) userLink.parentElement.style.display = 'none'; else userLink.style.display = 'none'; } return; }
-                var userLink = document.querySelector('#accordionSidebar a.nav-link[href="usuarios.html"]'); if(userLink){ if(userLink.parentElement) userLink.parentElement.style.display = 'none'; else userLink.style.display = 'none'; }
-            }catch(e){ console.error('Role control error', e); }
+                if (roleNorm === 'administrador') return;
+                if (roleNorm === 'cliente') { if (window.location.pathname.toLowerCase().indexOf('/cliente/') === -1) { window.location.href = 'Cliente/index.php'; return; } }
+                if (roleNorm === 'usuario') { var userLink = document.querySelector('#accordionSidebar a.nav-link[href="usuarios.html"]'); if (userLink) { if (userLink.parentElement) userLink.parentElement.style.display = 'none'; else userLink.style.display = 'none'; } return; }
+                var userLink = document.querySelector('#accordionSidebar a.nav-link[href="usuarios.html"]'); if (userLink) { if (userLink.parentElement) userLink.parentElement.style.display = 'none'; else userLink.style.display = 'none'; }
+            } catch (e) { console.error('Role control error', e); }
         })();
     </script>
     <script>
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.clear();       // Borra datos de sesión
+            sessionStorage.clear();     // Opcional: por si usas esto
+            window.location.href = 'index.html';  // Te manda al login
+        });
+
         $(document).ready(function () {
             var tabla = $('#tablaPedidos').DataTable({
                 "ajax": "php/obtener_pedidos.php",
@@ -296,23 +462,23 @@
                 });
             });
         });
-</script>
+    </script>
 
     <script>
-        (function(){
-            try{
+        (function () {
+            try {
                 var role = localStorage.getItem('userRole');
-                if(role && role.toLowerCase() === 'cliente'){
-                    if(window.location.pathname.toLowerCase().indexOf('/cliente/') === -1){
+                if (role && role.toLowerCase() === 'cliente') {
+                    if (window.location.pathname.toLowerCase().indexOf('/cliente/') === -1) {
                         window.location.href = 'Cliente/index.php';
                         return;
                     }
                 }
-                if(!role || role.toLowerCase() !== 'administrador'){
+                if (!role || role.toLowerCase() !== 'administrador') {
                     var userLink = document.querySelector('#accordionSidebar a.nav-link[href="usuarios.html"]');
-                    if(userLink){ userLink.style.display = 'none'; if(userLink.parentElement) userLink.parentElement.style.display = 'none'; }
+                    if (userLink) { userLink.style.display = 'none'; if (userLink.parentElement) userLink.parentElement.style.display = 'none'; }
                 }
-            }catch(e){ console.error('Role control error', e); }
+            } catch (e) { console.error('Role control error', e); }
         })();
     </script>
 </body>

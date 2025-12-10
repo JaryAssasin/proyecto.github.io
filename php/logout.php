@@ -20,7 +20,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 }
 
 // Redirigir a la página principal
-header('Location: ../index.php');
+header('Location: ../index.html');
 exit;
 
 ?>
